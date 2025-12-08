@@ -23,12 +23,12 @@
 
         .header {
             text-align: center;
-            margin-bottom: 30px;
-            padding: 20px 0;
+            margin-bottom: 20px;
+            padding: 15px 0;
         }
 
         .logo {
-            max-width: 200px;
+            max-width: 180px;
             height: auto;
         }
 
@@ -42,12 +42,49 @@
             -webkit-overflow-scrolling: touch;
         }
 
-        .question-container {
-            padding: 30px;
-            min-height: 400px;
+        .tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 18px 15px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            background: none;
+            -webkit-appearance: none;
+        }
+
+        .tab.active {
+            color: #16C23C;
+            background: white;
+            border-bottom: 3px solid #16C23C;
+            margin-bottom: -2px;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 25px;
+            min-height: 500px;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        /* Стили для режима изучения */
+        .study-container {
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            min-height: 500px;
         }
 
         .question {
@@ -85,8 +122,113 @@
             line-height: 1.6;
             word-wrap: break-word;
             overflow-wrap: break-word;
+            margin-bottom: 20px;
         }
 
+        /* Стили для режима тестирования */
+        .test-question-container {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .test-question-number {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .test-question-text {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            color: #333;
+            line-height: 1.5;
+            text-align: center;
+        }
+
+        .test-answer {
+            font-size: 16px;
+            color: #2c3e50;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #2FA7CD;
+            white-space: pre-wrap;
+            line-height: 1.6;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            display: none;
+            margin-top: 20px;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .test-answer.show {
+            display: block;
+        }
+
+        .test-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .test-button {
+            padding: 14px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 150px;
+            -webkit-appearance: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        .show-answer-btn {
+            background: linear-gradient(135deg, #2FA7CD 0%, #16C23C 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(47, 167, 205, 0.3);
+        }
+
+        .show-answer-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(47, 167, 205, 0.4);
+        }
+
+        .next-question-btn {
+            background: linear-gradient(135deg, #16C23C 0%, #2FA7CD 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(22, 194, 60, 0.3);
+        }
+
+        .next-question-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(22, 194, 60, 0.4);
+        }
+
+        .test-button:active {
+            transform: translateY(0);
+        }
+
+        .test-stats {
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 20px;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        /* Общие стили навигации */
         .navigation {
             display: flex;
             justify-content: space-between;
@@ -203,13 +345,13 @@
 
         /* iOS specific fixes */
         @supports (-webkit-touch-callout: none) {
-            .nav-button, .go-button {
+            .nav-button, .go-button, .test-button {
                 padding: 16px 25px;
             }
             
             .number-input {
                 padding: 14px;
-                font-size: 18px; /* Увеличиваем для iOS */
+                font-size: 18px;
             }
             
             body {
@@ -222,11 +364,16 @@
                 margin: 10px;
             }
             
-            .question-container {
+            .tab-content {
                 padding: 20px;
             }
             
-            .nav-button {
+            .tab {
+                padding: 15px 10px;
+                font-size: 14px;
+            }
+            
+            .nav-button, .test-button {
                 padding: 12px 20px;
                 min-width: 100px;
                 font-size: 14px;
@@ -250,6 +397,16 @@
             .question-counter {
                 font-size: 13px;
             }
+            
+            .test-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .test-button {
+                width: 100%;
+                max-width: 200px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -271,9 +428,17 @@
             .quick-navigation label {
                 text-align: center;
             }
+            
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .tab {
+                padding: 15px;
+            }
         }
 
-        /* Убираем стрелки у number input в WebKit браузерах */
+        /* Убираем стрелки у number input */
         input[type="number"]::-webkit-outer-spin-button,
         input[type="number"]::-webkit-inner-spin-button {
             -webkit-appearance: none;
@@ -307,19 +472,43 @@
 </div>
 
 <div class="container">
-    <div class="question-container">
-        <!-- Контейнер для вопросов и ответов будет добавлен здесь с помощью JavaScript -->
+    <div class="tabs">
+        <button class="tab active" onclick="switchTab('study')">Режим изучения</button>
+        <button class="tab" onclick="switchTab('test')">Режим тестирования</button>
+    </div>
+    
+    <!-- Вкладка режима изучения -->
+    <div class="tab-content active" id="study-tab">
+        <div class="study-container">
+            <!-- Контейнер для вопросов и ответов -->
+        </div>
+    </div>
+    
+    <!-- Вкладка режима тестирования -->
+    <div class="tab-content" id="test-tab">
+        <div class="test-stats" id="testStats">
+            Вопросов пройдено: 0 | Осталось: 308
+        </div>
         
-        <div class="quick-navigation">
-            <label for="questionNumber">Перейти к вопросу:</label>
-            <input type="number" id="questionNumber" class="number-input" min="1" max="308" value="1" pattern="[0-9]*" inputmode="numeric">
-            <button class="go-button" onclick="goToQuestionByInput()">Перейти</button>
+        <div class="test-question-container">
+            <div class="test-question-number" id="testQuestionNumber">Вопрос #</div>
+            <div class="test-question-text" id="testQuestionText">Нажмите "Следующий вопрос" для начала тестирования</div>
+            <div class="test-answer" id="testAnswer"></div>
+            
+            <div class="test-controls">
+                <button class="test-button show-answer-btn" onclick="showTestAnswer()" id="showAnswerBtn" style="display: none;">
+                    Показать ответ
+                </button>
+                <button class="test-button next-question-btn" onclick="nextTestQuestion()">
+                    Следующий вопрос
+                </button>
+            </div>
         </div>
         
         <div class="navigation">
-            <button class="nav-button" onclick="changeQuestion('prev')">Назад</button>
-            <div class="question-counter" id="questionCounter">Вопрос 1 из 308</div>
-            <button class="nav-button" onclick="changeQuestion('next')">Вперед</button>
+            <button class="nav-button" onclick="resetTest()">Начать заново</button>
+            <div class="question-counter" id="testQuestionCounter">Случайный тест</div>
+            <button class="nav-button" onclick="switchTab('study')">Вернуться к изучению</button>
         </div>
     </div>
 </div>
@@ -333,7 +522,7 @@
         {"question":"5. Кто определяет порядок инвестирования КФГД", "answer":"Национальный Банк (Закон о гарантировании вкладов)"},
         {"question":"6. Вероятность финансовых потерь в результате неспособности выполнить обязательства в срок", "answer":"Риск ликвидности (НБ РК №188)"},
         {"question":"7. Когда корреспондент составляет выписку о движении денег", "answer":"После завершения операционного дня (НБРК № 210)"},
-        {"question":"8. Кто не может быть акционером банка", "answer":"Гос компании, Юридические лица в офшорах (исключения Нац Холдинги, Проблемные фонды, Филиалы банков нерезидентовҚ"},
+        {"question":"8. Кто не может быть акционером банка", "answer":"Гос компании, Юридические лица в офшорах (исключения Нац Холдинги, Проблемные фонды, Филиалы банков нерезидентов"},
         {"question":"9. В каком размере Банку нужно вносить доп взнос в КФГД", "answer":"Размер дополнительного взноса не должен превышать двухкратный размер календарного взноса за предыдущий квартал"},
         {"question":"10. В какой срок КФГД информирует о ликвидации банка и начале возмещения с указанием времени и наименования другого банка", "answer":"30 рабочих дней с даты лишения лицензии на проведение всех операции"},
         {"question":"11. В каком случае КФГД обеспечивает гарантирование депозитов", "answer":"В случае лишения Банка лицензии на все операции"},
@@ -443,7 +632,7 @@
         {"question":"115. Где можно совершать сделки по ценным бумагам банками", "answer":"На организованном рынке ценных бумаг или по нормативам регулятора"},
         {"question":"116. Где назначают на должность Главного бухгалтера – профессиональных бухгалтеров", "answer":"В организациях публичного интереса"},
         {"question":"117. Кто производит восстановление прав на утраченные ценные бумаги", "answer":"суд"},
-        {"question":"118. Долевая ценная бумага", "answer":"Ценная бумага дающее право владельцу на определенную долю в имуществе"},
+        {"question":"118. Долевая ценная бумага", "answer":"Ценная бумага дающее право владельцу на определенную долу в имуществе"},
         {"question":"119. Зависимое Акционерное общество", "answer":"Другое юридическое лицо имеет 20% голосующих акции"},
         {"question":"120. Основание для прекращения обязательств", "answer":"Исполнением, Зачетом, Новацией, Прощение долга, Смертью, Ликвидация"},
         {"question":"121. При солидарности требовании может ли любой из солидарных кредиторов предъявить должнику в полном объеме", "answer":"да"},
@@ -563,12 +752,12 @@
         {"question":"235. Кому возможно предоставить Бланковый беззалоговый займа?", "answer":"Клиенту с высокой кредитоспособностью и надежностью"},
         {"question":"236. Предоставляется ли акционерам право на преимущественную покупку акции в случае конвертирования ценных бумаг в акции банка при реструктуризации", "answer":"Нет"},
         {"question":"237. Какие виды операции осуществляет Ипотечная организация", "answer":"Инвестиционная\nИздания литературы по вопросам Ипотеки\nРеализация собственного имущества"},
-        {"question":"238. Какие признаки неустойчивого финансового положения у юридического лица который получает статус крупного участника", "answer":"Юр лицо действует менее 2 лет \nОбязательства превышают активы (за исключением доли в других компаниях)\nУбытки за последние 2 года\nПросрочка перед Банком\nУхудшение финансовых последствии для заявителя \nСтоимость имущества недостаточна для приобретения акции"},
+        {"question":"238. Какие признаки неустойчивого финансового положения у юридического лица который получает статус крупного участника", "answer":"Юр лицо действует менее 2 лет \nОбязательства превышают активы (за исключением доли в других компаниях)\nУбытки за последние 2 года\nПросрочка перед Банком\nУхудшение финансовых последствии для заявителя \nСтоимость имущества недостаточна для приобретение акции"},
         {"question":"239. На какой срок избирается Омбудсмен", "answer":"2 года"},
         {"question":"240. За счет каких средств КФГД будет производить выплату сверх специального резерва", "answer":"Нац Банк"},
         {"question":"241. Какие меры применяются Банку при несоблюдении по раскрытию общих условий", "answer":"Приостановление или лишение лицензии на все или отдельные операции"},
         {"question":"242. С кем запрещено проводить или рассматривать сделки Главному бухгалтеру", "answer":"По себе и близким родственникам \nЮридическим лицом, где родственник должностное лицо\nСупругами и их близкими родственниками"},
-        {"question":"243. В каких организациях запрещается участвовать Ипотечной организации", "answer":"В Финансовых организациях \nВ Юр лицах с акциями размещенными на фондовом рынке с наивысшей категорией\nВ компаниях по автоматизации процессов связанных с Ипотекой\nЗапрещается в компаниях (ТОО АО)"},
+        {"question":"243. В каких организации запрещается участвовать Ипотечной организации", "answer":"В Финансовых организациях \nВ Юр лицах с акциями размещенными на фондовом рынке с наивысшей категорией\nВ компаниях по автоматизации процессов связанных с Ипотекой\nЗапрещается в компаниях (ТОО АО)"},
         {"question":"244. При наступлении признака Банковского холдинга (крупного участника) в какой срок должен уведомить Регулятора", "answer":"10 календарных дней"},
         {"question":"245. С какой целью проводится аудит", "answer":"Точность и полнота отчетности по банковским операциям\nСоответствия требованиям Законов РК\nСоответствия ВНД Банка"},
         {"question":"246. В течение какого времени крупный участник должен уведомить Регулятор об изменении кол-ва акции", "answer":"30 календарных дней"},
@@ -636,16 +825,50 @@
         {"question":"308. Какие организации обязаны вести учет по МСФО", "answer":"Субъекты крупного предпринимательства\nОрганизации публичного интереса"}
     ];
 
-
     let currentQuestionIndex = 0;
+    let currentTestQuestionIndex = -1;
+    let testQuestions = [];
+    let answeredQuestions = new Set();
+    
+    // Функция для переключения вкладок
+    function switchTab(tabName) {
+        // Обновляем активные вкладки
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.classList.remove('active');
+        });
+        document.querySelectorAll('.tab-content').forEach(content => {
+            content.classList.remove('active');
+        });
+        
+        // Активируем выбранную вкладку
+        if (tabName === 'study') {
+            document.querySelector('.tab:nth-child(1)').classList.add('active');
+            document.getElementById('study-tab').classList.add('active');
+        } else {
+            document.querySelector('.tab:nth-child(2)').classList.add('active');
+            document.getElementById('test-tab').classList.add('active');
+            
+            // Если это первое переключение на тест, инициализируем тест
+            if (testQuestions.length === 0) {
+                initializeTest();
+            }
+        }
+        
+        saveScrollPosition();
+    }
 
     // Функция для создания вопросов и ответов на страницу
     function createQuestions() {
-        const container = document.querySelector('.question-container');
-        // Очищаем контейнер
-        const existingQuestions = container.querySelectorAll('.question');
-        existingQuestions.forEach(q => q.remove());
+        const container = document.querySelector('.study-container');
+        if (!container) {
+            console.error('Контейнер .study-container не найден!');
+            return;
+        }
         
+        // Очищаем контейнер
+        container.innerHTML = '';
+        
+        // Создаем все вопросы
         questionsAndAnswers.forEach((item, index) => {
             const questionDiv = document.createElement('div');
             questionDiv.classList.add('question');
@@ -658,13 +881,129 @@
                 <div class="question-text">${item.question}</div>
                 <div class="answer">${item.answer}</div>
             `;
-            container.insertBefore(questionDiv, document.querySelector('.quick-navigation'));
+            container.appendChild(questionDiv);
         });
+        
+        // После создания всех вопросов добавляем навигацию
+        const quickNav = document.createElement('div');
+        quickNav.className = 'quick-navigation';
+        quickNav.innerHTML = `
+            <label for="questionNumber">Перейти к вопросу:</label>
+            <input type="number" id="questionNumber" class="number-input" min="1" max="${questionsAndAnswers.length}" value="${currentQuestionIndex + 1}" pattern="[0-9]*" inputmode="numeric">
+            <button class="go-button" onclick="goToQuestionByInput()">Перейти</button>
+        `;
+        container.appendChild(quickNav);
+        
+        const navigation = document.createElement('div');
+        navigation.className = 'navigation';
+        navigation.innerHTML = `
+            <button class="nav-button" onclick="changeQuestion('prev')">Назад</button>
+            <div class="question-counter" id="questionCounter">Вопрос ${currentQuestionIndex + 1} из ${questionsAndAnswers.length}</div>
+            <button class="nav-button" onclick="changeQuestion('next')">Вперед</button>
+        `;
+        container.appendChild(navigation);
+        
+        // Добавляем обработчики событий для ввода
+        const numberInput = document.getElementById('questionNumber');
+        if (numberInput) {
+            numberInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    goToQuestionByInput();
+                }
+            });
+            
+            numberInput.addEventListener('input', function(e) {
+                this.value = this.value.replace(/[^0-9]/g, '');
+            });
+        }
     }
 
-    // Функция для перехода к вопросу по введенному номеру
+    // Функция для инициализации тестирования
+    function initializeTest() {
+        // Создаем массив индексов всех вопросов
+        testQuestions = Array.from({length: questionsAndAnswers.length}, (_, i) => i);
+        // Перемешиваем вопросы
+        shuffleArray(testQuestions);
+        answeredQuestions.clear();
+        currentTestQuestionIndex = -1;
+        updateTestStats();
+        
+        // Скрываем кнопку "Показать ответ"
+        document.getElementById('showAnswerBtn').style.display = 'none';
+        document.getElementById('testAnswer').classList.remove('show');
+        
+        document.getElementById('testQuestionNumber').textContent = 'Вопрос #';
+        document.getElementById('testQuestionText').textContent = 'Нажмите "Следующий вопрос" для начала тестирования';
+        document.getElementById('testAnswer').textContent = '';
+    }
+
+    // Функция для перемешивания массива
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    // Функция для получения следующего случайного вопроса
+    function nextTestQuestion() {
+        // Если все вопросы пройдены, начинаем заново
+        if (answeredQuestions.size >= questionsAndAnswers.length) {
+            resetTest();
+            return;
+        }
+        
+        // Находим следующий непройденный вопрос
+        let nextIndex;
+        do {
+            currentTestQuestionIndex = (currentTestQuestionIndex + 1) % testQuestions.length;
+            nextIndex = testQuestions[currentTestQuestionIndex];
+        } while (answeredQuestions.has(nextIndex));
+        
+        // Отображаем вопрос
+        const question = questionsAndAnswers[nextIndex];
+        document.getElementById('testQuestionNumber').textContent = `Вопрос ${nextIndex + 1}`;
+        document.getElementById('testQuestionText').textContent = question.question;
+        document.getElementById('testAnswer').textContent = question.answer;
+        
+        // Скрываем ответ
+        document.getElementById('testAnswer').classList.remove('show');
+        document.getElementById('showAnswerBtn').style.display = 'block';
+        
+        updateTestStats();
+        saveScrollPosition();
+    }
+
+    // Функция для показа ответа
+    function showTestAnswer() {
+        document.getElementById('testAnswer').classList.add('show');
+        // Отмечаем вопрос как пройденный
+        if (currentTestQuestionIndex >= 0) {
+            const questionIndex = testQuestions[currentTestQuestionIndex];
+            answeredQuestions.add(questionIndex);
+            updateTestStats();
+        }
+    }
+
+    // Функция для обновления статистики тестирования
+    function updateTestStats() {
+        const stats = document.getElementById('testStats');
+        stats.textContent = `Вопросов пройдено: ${answeredQuestions.size} | Осталось: ${questionsAndAnswers.length - answeredQuestions.size}`;
+    }
+
+    // Функция для сброса теста
+    function resetTest() {
+        if (confirm('Вы уверены, что хотите начать тест заново? Весь прогресс будет сброшен.')) {
+            initializeTest();
+        }
+    }
+
+    // Функция для перехода к вопросу по введенному номеру (режим изучения)
     function goToQuestionByInput() {
         const input = document.getElementById('questionNumber');
+        if (!input) return;
+        
         let questionNumber = parseInt(input.value);
         
         // Проверка на валидность номера
@@ -690,7 +1029,9 @@
     // Функция для обновления значения в поле ввода
     function updateInputValue() {
         const input = document.getElementById('questionNumber');
-        input.value = currentQuestionIndex + 1;
+        if (input) {
+            input.value = currentQuestionIndex + 1;
+        }
     }
 
     // Функция для изменения видимости вопроса
@@ -707,7 +1048,9 @@
     // Функция для обновления счетчика вопросов
     function updateQuestionCounter() {
         const counter = document.getElementById('questionCounter');
-        counter.textContent = `Вопрос ${currentQuestionIndex + 1} из ${questionsAndAnswers.length}`;
+        if (counter) {
+            counter.textContent = `Вопрос ${currentQuestionIndex + 1} из ${questionsAndAnswers.length}`;
+        }
     }
 
     // Функция для изменения вопроса (вперед/назад)
@@ -722,19 +1065,6 @@
         updateInputValue();
         saveScrollPosition();
     }
-
-    // Обработка нажатия Enter в поле ввода
-    document.getElementById('questionNumber').addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            goToQuestionByInput();
-        }
-    });
-
-    // Обработка изменения значения в поле ввода (для iOS)
-    document.getElementById('questionNumber').addEventListener('input', function(e) {
-        // Ограничиваем ввод только цифрами
-        this.value = this.value.replace(/[^0-9]/g, '');
-    });
 
     // Функция для сохранения позиции прокрутки
     function saveScrollPosition() {
@@ -764,7 +1094,10 @@
         updateQuestionCounter();
         updateInputValue();
         
-        // iOS Safari fix - принудительный рефлоу
+        // Инициализируем тест
+        initializeTest();
+        
+        // iOS Safari fix
         setTimeout(() => {
             document.body.style.overflow = 'auto';
         }, 100);
